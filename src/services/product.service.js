@@ -73,21 +73,20 @@ export const createPlant = async (plantInfo) => {
   }
 
   // 3) confirm & create plant with backend
+  const formData = new FormData();
+  formData.append('image', image);
+  formData.append('name', name);
+  formData.append('category', category);
+  formData.append('price', price);
+  formData.append('image_url', imageUrl);
   const plantsPostOptions = {
     method: 'POST',
     headers: {
       Accept: 'application/json',
-      'Content-Type': 'application/json',
+      // 'Content-Type': 'application/json',
       ...authHeader(),
     },
-    body: JSON.stringify({
-      plant: {
-        name,
-        category,
-        price,
-        image_url: imageUrl,
-      },
-    }),
+    body: formData,
   };
   const res = await fetch(PLANTS_API_ENDPOINT, plantsPostOptions);
   if (res.status !== 200) return res;
